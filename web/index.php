@@ -1,4 +1,4 @@
 <?php
 
-echo "HHHHHHHHHHHHHHHHHHHHHHHHHHHH";
+echo "Nice Move !";
 ?>
