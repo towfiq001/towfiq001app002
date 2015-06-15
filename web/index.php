@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<body>
+<body id = "b1">
 
 
 <div id="id01"></div>
@@ -48,71 +48,86 @@ function myFunction(response) {
 <?php
 $question = $_GET['q'];
 print("</br>");
-print($question);
+//print($question);
 $quesarr = explode ( " " , $question );
-for($i=0; $i<sizeof($quesarr); $i++){
-	print($quesarr[$i]);
-	print(" ");
-}
+//for($i=0; $i<sizeof($quesarr); $i++){
+	//print($quesarr[$i]);
+//	print(" ");
+//}
 print("</br>");
-print(     substr(   $quesarr[sizeof($quesarr)-1], 0 , -1   )      );
+//print(     explode("?", $quesarr[sizeof($quesarr)-1])[0]      );
 print("</br>");
 $name = "Kitty";
-echo "{ ";
+$res = "Your majesty! Jon Snow knows nothing! So do I!";
+$key = "null";
+
 
 	if ( strpos(strtolower($quesarr[0]), 'hello') !== false 
 		||strpos(strtolower($quesarr[0]), 'hi') !== false) {
+		echo "{ \"answer\" :  ";
 		
 		if (strpos(strtolower($question), 'how are you') !== false) {
-			echo "\"answer\" : \"Hello, ".$name."! I'm fine. Thank you.\" ";
+			echo " \"Hello, ".$name."! I'm fine. Thank you.\" ";
 		}
-		if (strpos(strtolower($question), 'what') !== false) {
+		elseif (strpos(strtolower($question), 'what') !== false) {
 			if (strpos(strtolower($question), 'name') !== false) {
-				echo "\"answer\" : \"Hello, ".$name."! It's Muktosoft Autobot Service speaking!\" ";
+				echo " \"Hello, ".$name."! It's Muktosoft Autobot Service!\" ";
 			}
 		}
-		if (strpos(strtolower($question), 'i am') !== false) {
+		elseif (strpos(strtolower($question), 'i am') !== false) {
 			$name = explode(".", explode(" ", substr($question, strpos(strtolower($question),'am')) )[1])[0];
 			//echo $name;
-			echo "\"answer\" : \"Hello, ".$name."! It's Muktosoft Autobot Service speaking!\" ";
+			echo " \"Hello ".$name."! You are welcome!\" ";
 		}
+		else{
+			echo " \"".$res."\" ";
+		}
+		echo " }";
 	}
 	
-	if ( strpos(strtolower($quesarr[0]), 'good') !== false) {
+	elseif ( strpos(strtolower($quesarr[0]), 'good') !== false) {
+		echo "{ \"answer\" :  ";
 		
 		if (strpos(strtolower($question), 'how are you') !== false) {
-			echo "\"answer\" : \"Good ".$quesarr[1]." I'm fine. Thank you.\" ";
+			echo " \"Good ".$quesarr[1]." I'm fine. Thank you.\" ";
 		}
-		if (strpos(strtolower($question), 'how are you') !== false) {
-			echo "\"answer\" : \"Good ".$quesarr[1]." I'm fine. Thank you.\" ";
+		elseif (strpos(strtolower($question), 'how are you') !== false) {
+			echo " \"Good ".$quesarr[1]." I'm fine. Thank you.\" ";
 		}
-		if (strpos(strtolower($question), 'how are you') !== false) {
-			echo "\"answer\" : \"Good ".$quesarr[1]." I'm fine. Thank you.\" ";
+		elseif (strpos(strtolower($question), 'what') !== false) {
+			if (strpos(strtolower($question), 'name') !== false) {
+				echo " \"Good ".$quesarr[1]." It's Muktosoft Autobot Service!\" ";
+			}
 		}
+		elseif (strpos(strtolower($question), 'i am') !== false) {
+			$name = explode(".", explode(" ", substr($question, strpos(strtolower($question),'am')) )[1])[0];
+			//echo $name;
+			echo " \"Hello ".$name."! You are welcome!\" ";
+		}
+		else{
+			echo " \"".$res."\" ";
+		}
+		echo " }";
 		
 	}
 	
-	if (strpos(strtolower($quesarr[0]), 'what') !== false) {
-	}
-	
-	if (strpos(strtolower($quesarr[0]), 'what') !== false) {
-	}
-	
-	if (strpos(strtolower($quesarr[0]), 'what') !== false) {
-		if (strpos($question,'humidity') !== false) {
-			echo 'true</br>';
-			print($quesarr[3]);
+	elseif (strpos(strtolower($quesarr[0]), 'is') !== false) {
+		echo "{ \"answer\" :  ";
+		if (strpos($question,'rain') !== false) {
 			$_url ="http://api.openweathermap.org/data/2.5/weather?q=".explode( "?", $quesarr[sizeof($quesarr)-1] )[0];
-			echo $_url;
+			//echo $_url;
 			echo "<script> 
 					var url = '$_url';
 					var xmlhttp = new XMLHttpRequest();
 					xmlhttp.onreadystatechange=function() {
 						if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 							var arr1 = JSON.parse(xmlhttp.responseText);
-							document.getElementById('id02').innerHTML += arr1.main.humidity+' ';
-							document.getElementById('id02').innerHTML += arr1.main.humidity+' ';
-							document.getElementById('id02').innerHTML += arr1.main.humidity+' ';
+							if(arr1.weather[0].main == 'Rain'){
+								document.write('{ \"answer\" : '+' \"Yes\" '+' }');
+							}
+							else{
+								document.write('{ \"answer\" : '+' \"No\" '+' }');
+							}
 						}
 					}
 					xmlhttp.open('GET', url, true);
@@ -120,10 +135,123 @@ echo "{ ";
 					
 					</script>";
 		}
+		elseif (strpos($question,'cloud') !== false) {
+			$_url ="http://api.openweathermap.org/data/2.5/weather?q=".explode( "?", $quesarr[sizeof($quesarr)-1] )[0];
+			//echo $_url;
+			echo "<script> 
+					var url = '$_url';
+					var xmlhttp = new XMLHttpRequest();
+					xmlhttp.onreadystatechange=function() {
+						if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+							var arr1 = JSON.parse(xmlhttp.responseText);
+							if(arr1.weather[0].main == 'Clouds'){
+								document.write('{ \"answer\" : '+' \"Yes\" '+' }');
+							}
+							else{
+								document.write('{ \"answer\" : '+' \"No\" '+' }');
+							}
+						}
+					}
+					xmlhttp.open('GET', url, true);
+					xmlhttp.send();
+					
+					</script>";
+		}
+		elseif (strpos($question,'clear') !== false) {
+			$_url ="http://api.openweathermap.org/data/2.5/weather?q=".explode( "?", $quesarr[sizeof($quesarr)-1] )[0];
+			//echo $_url;
+			echo "<script> 
+					var url = '$_url';
+					var xmlhttp = new XMLHttpRequest();
+					xmlhttp.onreadystatechange=function() {
+						if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+							var arr1 = JSON.parse(xmlhttp.responseText);
+							if(arr1.weather[0].main == 'Clear'){
+								document.write('{ \"answer\" : '+' \"Yes\" '+' }');
+							}
+							else{
+								document.write('{ \"answer\" : '+' \"No\" '+' }');
+							}
+						}
+					}
+					xmlhttp.open('GET', url, true);
+					xmlhttp.send();
+					
+					</script>";
+		}
+		else{
+			echo " \"".$res."\" ";
+		}
+		echo " }";
+	}
+	
+	elseif (strpos(strtolower($quesarr[0]), 'what') !== false) {
+		echo "{ \"answer\" :  ";
+		if (strpos($question,'humidity') !== false) {
+			$_url ="http://api.openweathermap.org/data/2.5/weather?q=".explode( "?", $quesarr[sizeof($quesarr)-1] )[0];
+			//echo $_url;
+			echo "<script> 
+					var url = '$_url';
+					var xmlhttp = new XMLHttpRequest();
+					xmlhttp.onreadystatechange=function() {
+						if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+							var arr1 = JSON.parse(xmlhttp.responseText);
+							document.write('{ \"answer\" : '+' \"'+arr1.main.humidity+'\" '+' }');
+						}
+					}
+					xmlhttp.open('GET', url, true);
+					xmlhttp.send();
+					
+					</script>";
+		}
+		elseif (strpos($question,'temp') !== false) {
+			$_url ="http://api.openweathermap.org/data/2.5/weather?q=".explode( "?", $quesarr[sizeof($quesarr)-1] )[0];
+			//echo $_url;
+			echo "<script> 
+					var url = '$_url';
+					var xmlhttp = new XMLHttpRequest();
+					xmlhttp.onreadystatechange=function() {
+						if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+							var arr1 = JSON.parse(xmlhttp.responseText);
+							document.write('{ \"answer\" : '+' \"'+(arr1.main.temp-273)+' C\" '+' }');
+						}
+					}
+					xmlhttp.open('GET', url, true);
+					xmlhttp.send();
+					
+					</script>";
+		}
+		elseif (strpos($question,'pressure') !== false) {
+			$_url ="http://api.openweathermap.org/data/2.5/weather?q=".explode( "?", $quesarr[sizeof($quesarr)-1] )[0];
+			//echo $_url;
+			echo "<script> 
+					var url = '$_url';
+					var xmlhttp = new XMLHttpRequest();
+					xmlhttp.onreadystatechange=function() {
+						if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+							var arr1 = JSON.parse(xmlhttp.responseText);
+							document.write('{ \"answer\" : '+' \"'+arr1.main.pressure+' hPa\" '+' }');
+						}
+					}
+					xmlhttp.open('GET', url, true);
+					xmlhttp.send();
+					
+					</script>";
+		}
+		else{
+			echo " \"".$res."\" ";
+		}
+		echo " }";
+	}
+	else{
+		echo "{ \"answer\" :  ";
+		echo " \"".$res."\" ";
+		echo " }";
 	}
 	
 	
-echo " }";
+	
+
 ?>
 
 </body>
