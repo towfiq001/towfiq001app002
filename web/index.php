@@ -1,49 +1,6 @@
 <!DOCTYPE html>
 <html>
-<body id = "b1">
-
-
-<div id="id01"></div>
-<div id="id02"></div>
-
-<script>
-var xmlhttp = new XMLHttpRequest();
-
-//var url = "http://www.w3schools.com/website/customers_mysql.php";
-var url = "http://api.openweathermap.org/data/2.5/weather?q=Dhaka,bangladesh";
-
-xmlhttp.onreadystatechange=function() {
-    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-        myFunction(xmlhttp.responseText);
-    }
-}
-xmlhttp.open("GET", url, true);
-xmlhttp.send();
-var arr;
-function myFunction(response) {
-    arr = JSON.parse(response);
-    var i;
-    var out;
-	out += xmlhttp.responseText+"</br>==============</br>";
-    
-    out += arr.coord.lon + " " +arr.coord.lon + "</br>";
-	out += arr.sys.message+" "+arr.sys.country+" "+arr.sys.sunrise+" "+arr.sys.sunset+" "+"</br>";
-    out += arr.weather[0].id+" "+arr.weather[0].main+" "+arr.weather[0].description+" "+arr.weather[0].icon+" "+"</br>";  
-    //out += arr.base"</br>";
-    out += arr.main.temp+" "+arr.main.temp_min+" "+arr.main.temp_max+" "+arr.main.pressure+" "+arr.main.sea_level+" "+arr.main.grnd_level+" "+arr.main.humidity+" "+"</br>";
-	out += arr.wind.speed+" "+arr.wind.deg+"</br>";
-	out += arr.clouds.all+"</br>";
-	//out += arr.rain.3h+"</br>";
-	out += arr.dt+"</br>";
-	out += arr.id+"</br>";
-	out += arr.name+"</br>";
-	out += arr.cod+"</br>";
-					
-					
-	//out += xmlhttp.responseText;
-    //document.getElementById("id01").innerHTML = out;
-}
-</script>
+<body>
 
 <?php
 $question = $_GET['q'];
@@ -60,7 +17,7 @@ print("</br>");
 $name = "Kitty";
 $res = "Your majesty! Jon Snow knows nothing! So do I!";
 $key = "null";
-
+	
 
 	if ( strpos(strtolower($quesarr[0]), 'hello') !== false 
 		||strpos(strtolower($quesarr[0]), 'hi') !== false) {
@@ -80,7 +37,7 @@ $key = "null";
 			echo " \"Hello ".$name."! You are welcome!\" ";
 		}
 		else{
-			echo " \"".$res."\" ";
+			echo " \"Your majesty! Jon Snow knows nothing! So do I!\" ";
 		}
 		echo " }";
 	}
@@ -105,7 +62,7 @@ $key = "null";
 			echo " \"Hello ".$name."! You are welcome!\" ";
 		}
 		else{
-			echo " \"".$res."\" ";
+			echo " \"Your majesty! Jon Snow knows nothing! So do I!\" ";
 		}
 		echo " }";
 		
@@ -113,139 +70,82 @@ $key = "null";
 	
 	elseif (strpos(strtolower($quesarr[0]), 'is') !== false) {
 		echo "{ \"answer\" :  ";
-		if (strpos($question,'rain') !== false) {
+		if (strpos(strtolower($question),'rain') !== false) {
 			$_url ="http://api.openweathermap.org/data/2.5/weather?q=".explode( "?", $quesarr[sizeof($quesarr)-1] )[0];
-			//echo $_url;
-			echo "<script> 
-					var url = '$_url';
-					var xmlhttp = new XMLHttpRequest();
-					xmlhttp.onreadystatechange=function() {
-						if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-							var arr1 = JSON.parse(xmlhttp.responseText);
-							if(arr1.weather[0].main == 'Rain'){
-								document.write('{ \"answer\" : '+' \"Yes\" '+' }');
-							}
-							else{
-								document.write('{ \"answer\" : '+' \"No\" '+' }');
-							}
-						}
-					}
-					xmlhttp.open('GET', url, true);
-					xmlhttp.send();
-					
-					</script>";
+			$json = file_get_contents($_url);
+			//var_dump(json_decode($json, true));
+			$arr1 = json_decode($json, true);
+			//echo $arr1["weather"][0]["main"];//???
+			if (strpos(strtolower($arr1["weather"][0]["main"]),'rain') !==false){
+				echo " \"Yes\" ";
+			}
+			else{
+				echo " \"No\" ";	
+			}
 		}
-		elseif (strpos($question,'cloud') !== false) {
+		elseif (strpos(strtolower($question),'cloud') !== false) {
 			$_url ="http://api.openweathermap.org/data/2.5/weather?q=".explode( "?", $quesarr[sizeof($quesarr)-1] )[0];
-			//echo $_url;
-			echo "<script> 
-					var url = '$_url';
-					var xmlhttp = new XMLHttpRequest();
-					xmlhttp.onreadystatechange=function() {
-						if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-							var arr1 = JSON.parse(xmlhttp.responseText);
-							if(arr1.weather[0].main == 'Clouds'){
-								document.write('{ \"answer\" : '+' \"Yes\" '+' }');
-							}
-							else{
-								document.write('{ \"answer\" : '+' \"No\" '+' }');
-							}
-						}
-					}
-					xmlhttp.open('GET', url, true);
-					xmlhttp.send();
-					
-					</script>";
+			$json = file_get_contents($_url);
+			//var_dump(json_decode($json, true));
+			$arr1 = json_decode($json, true);
+			//echo $arr1["weather"][0]["main"];//???
+			if (strpos(strtolower($arr1["weather"][0]["main"]),'cloud') !==false){
+				echo " \"Yes\" ";
+			}
+			else{
+				echo " \"No\" ";	
+			}
 		}
-		elseif (strpos($question,'clear') !== false) {
+		elseif (strpos(strtolower($question),'clear') !== false) {
 			$_url ="http://api.openweathermap.org/data/2.5/weather?q=".explode( "?", $quesarr[sizeof($quesarr)-1] )[0];
-			//echo $_url;
-			echo "<script> 
-					var url = '$_url';
-					var xmlhttp = new XMLHttpRequest();
-					xmlhttp.onreadystatechange=function() {
-						if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-							var arr1 = JSON.parse(xmlhttp.responseText);
-							if(arr1.weather[0].main == 'Clear'){
-								document.write('{ \"answer\" : '+' \"Yes\" '+' }');
-							}
-							else{
-								document.write('{ \"answer\" : '+' \"No\" '+' }');
-							}
-						}
-					}
-					xmlhttp.open('GET', url, true);
-					xmlhttp.send();
-					
-					</script>";
+			$json = file_get_contents($_url);
+			//var_dump(json_decode($json, true));
+			$arr1 = json_decode($json, true);
+			//echo $arr1["weather"][0]["main"];//???
+			if (strpos(strtolower($arr1["weather"][0]["main"]),'clear') !==false){
+				echo " \"Yes\" ";
+			}
+			else{
+				echo " \"No\" ";	
+			}
 		}
 		else{
-			echo " \"".$res."\" ";
+			echo " \"Your majesty! Jon Snow knows nothing! So do I!\" ";
 		}
 		echo " }";
 	}
 	
 	elseif (strpos(strtolower($quesarr[0]), 'what') !== false) {
 		echo "{ \"answer\" :  ";
-		if (strpos($question,'humidity') !== false) {
+		if (strpos(strtolower($question),'humidity') !== false) {
 			$_url ="http://api.openweathermap.org/data/2.5/weather?q=".explode( "?", $quesarr[sizeof($quesarr)-1] )[0];
-			//echo $_url;
-			echo "<script> 
-					var url = '$_url';
-					var xmlhttp = new XMLHttpRequest();
-					xmlhttp.onreadystatechange=function() {
-						if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-							var arr1 = JSON.parse(xmlhttp.responseText);
-							document.write('{ \"answer\" : '+' \"'+arr1.main.humidity+'\" '+' }');
-						}
-					}
-					xmlhttp.open('GET', url, true);
-					xmlhttp.send();
-					
-					</script>";
+			$json = file_get_contents($_url);
+			//var_dump(json_decode($json, true));
+			$arr1 = json_decode($json, true);
+			echo " \"".$arr1["main"]["humidity"]." percent\" ";
 		}
-		elseif (strpos($question,'temp') !== false) {
+		elseif (strpos(strtolower($question),'temp') !== false) {
 			$_url ="http://api.openweathermap.org/data/2.5/weather?q=".explode( "?", $quesarr[sizeof($quesarr)-1] )[0];
-			//echo $_url;
-			echo "<script> 
-					var url = '$_url';
-					var xmlhttp = new XMLHttpRequest();
-					xmlhttp.onreadystatechange=function() {
-						if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-							var arr1 = JSON.parse(xmlhttp.responseText);
-							document.write('{ \"answer\" : '+' \"'+(arr1.main.temp-273)+' C\" '+' }');
-						}
-					}
-					xmlhttp.open('GET', url, true);
-					xmlhttp.send();
-					
-					</script>";
+			$json = file_get_contents($_url);
+			//var_dump(json_decode($json, true));
+			$arr1 = json_decode($json, true);
+			echo " \"".$arr1["main"]["temp"]." K\" ";
 		}
-		elseif (strpos($question,'pressure') !== false) {
+		elseif (strpos(strtolower($question),'pressure') !== false) {
 			$_url ="http://api.openweathermap.org/data/2.5/weather?q=".explode( "?", $quesarr[sizeof($quesarr)-1] )[0];
-			//echo $_url;
-			echo "<script> 
-					var url = '$_url';
-					var xmlhttp = new XMLHttpRequest();
-					xmlhttp.onreadystatechange=function() {
-						if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-							var arr1 = JSON.parse(xmlhttp.responseText);
-							document.write('{ \"answer\" : '+' \"'+arr1.main.pressure+' hPa\" '+' }');
-						}
-					}
-					xmlhttp.open('GET', url, true);
-					xmlhttp.send();
-					
-					</script>";
+			$json = file_get_contents($_url);
+			//var_dump(json_decode($json, true));
+			$arr1 = json_decode($json, true);
+			echo " \"".$arr1["main"]["pressure"]." hPa\"";
 		}
 		else{
-			echo " \"".$res."\" ";
+			echo " \"Your majesty! Jon Snow knows nothing! So do I!\" ";
 		}
 		echo " }";
 	}
 	else{
 		echo "{ \"answer\" :  ";
-		echo " \"".$res."\" ";
+		echo " \"Your majesty! Jon Snow knows nothing! So do I!\" ";
 		echo " }";
 	}
 	
